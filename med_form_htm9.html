@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTML Media and Form Assignment 9</title>
+</head>
+<body>
+    <fieldset style="width: fit-content;">
+        <legend>Feedback form</legend>
+        <form action="#" method="get">
+            <div>
+                <label for="name">User's name: </label>
+                <input type="text" name="name" id="name" placeholder="Enter your name" required>
+            </div><br>
+            <div>
+                <label for="email">Email ID: </label>
+                <input type="email" name="email" id="email" placeholder="Enter your email address" required>
+            </div><br>
+            <div>
+                <label for="message">Feedback:</label><br>
+                <textarea name="message" id="message" maxlength="200" placeholder="Within 200 words" required rows="5" cols="20"></textarea>
+            </div><br>
+            <div>
+                <input type="submit"><input type="reset">
+            </div>
+        </form>
+</body>
+</html>
