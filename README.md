@@ -1,2 +1,2 @@
-# PW_webdev_ass
+# DSA_STCET
 repository for assignments
