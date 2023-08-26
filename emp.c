@@ -24,10 +24,10 @@ int main()
 		scanf("%d",&e[i].age);
 		printf("Name: ");
 		fflush(stdin);
-		scanf("%[^\n]",&e[i].name);
+		scanf("%[^\n]",e[i].name);
 		printf("Department: ");
 		fflush(stdin);
-		scanf("%[^\n]",&e[i].dept);
+		scanf("%[^\n]",e[i].dept);
 	}
 	printf("\nRetirement coming soon...");
 	for(i=0;i<n;i++)
