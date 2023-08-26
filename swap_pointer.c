@@ -2,10 +2,9 @@
 
 void swap(int *a, int *b)
 {
-	int t;
-	t=*a;
-	*a=*b;
-	*b=t;
+    *a=*a^*b;
+    *b=*a^*b;
+    *a=*a^*b;
 	return;
 }
 
@@ -20,4 +19,3 @@ int main()
 	printf("After swapping...\na=%d\nb=%d",x,y);
 	return 0;
 }
-
