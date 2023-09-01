@@ -139,7 +139,7 @@ node* del_after(node* head)
 	int item;
 	node *c,*del;
 	if(head==NULL)
-		return;
+		return head;
 	printf("Enter the element after which deletion will take place: ");
 	scanf("%d",&item);
 	if(check(item,head)==0)
