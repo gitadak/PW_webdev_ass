@@ -8,12 +8,11 @@ struct node
 };
 typedef struct node node;
 
-node* create()
+node* create(int item)
 {
 	node *newnode;
 	newnode=(node*)malloc(sizeof(node));
-	printf("Enter the data: ");
-	scanf("%d",&newnode->data);
+	newnode->data=item;
 	newnode->next=NULL;
 	return newnode;
 }
@@ -58,14 +57,11 @@ node* insert_beg(node *newnode,node* head)
 	return head;
 }
 
-node* insert_after(node* newnode,node *head)
+node* insert_after(node *head,node* newnode,int item)
 {
-	int item;
 	node *c;
 	if(head==NULL)
 		return head;
-	printf("Enter the element after which %d will be inserted: ",newnode->data);
-	scanf("%d",&item);
 	if(check(item,head)==0)
 	{
 		printf("%d is not present\n",item);
@@ -79,14 +75,11 @@ node* insert_after(node* newnode,node *head)
 	return head;
 }
 
-node* insert_before(node* newnode, node* head)
+node* insert_before(node* head,node* newnode, int item)
 {
-	int item;
 	node *c;
 	if(head==NULL)
 		return head;
-	printf("Enter the element before which %d will be inserted: ",newnode->data);
-	scanf("%d",&item);
 	if(check(item,head)==0)
 	{
 		printf("%d is not present\n",item);
@@ -134,14 +127,11 @@ node* del_end(node *head)
 	return head;
 }
 
-node* del_after(node* head)
+node* del_after(node* head,int item)
 {
-	int item;
 	node *c,*del;
 	if(head==NULL)
 		return head;
-	printf("Enter the element after which deletion will take place: ");
-	scanf("%d",&item);
 	if(check(item,head)==0)
 	{
 		printf("%d is not present\n",item);
@@ -161,14 +151,11 @@ node* del_after(node* head)
 	return head;
 }
 
-node* del_before(node *head)
+node* del_before(node *head,int item)
 {
-	int item;
 	node *c,*del;
 	if(head==NULL)
 		return head;
-	printf("Enter the element before which deletion will take place: ");
-	scanf("%d",&item);
 	if(check(item,head)==0)
 	{
 		printf("%d is not present\n",item);
@@ -215,53 +202,98 @@ void display(node* head)
 int main()
 {
 	node* head=NULL,*newnode;
-	int x,item;
+	int x,data_item,item;
+	char y;
 	do
 	{
-		printf("\n1. Insert_end\n2. Insert_beg\n3. Display\n4. Insert_after\n5. Insert_before\n6. Delete_beg\n7. Delete_end\n8. Delete_after\n9. Delete_before\n10. Exit\nEnter your choice: ");
+		printf("\n1. Insert\n2. Delete\n3. Display\n4. Exit\nEnter your choice: ");
 		scanf("%d",&x);
 		switch(x)
 		{
 			case 1:
-				newnode=create();
-				head=insert_end(newnode,head);
-				display(head);
+				do
+				{
+					fflush(stdin);
+					printf("\na. Insert at begin\nb. Insert at end\nc. Insert before an element\nd. Insert after an element\ne. Display\nf. Exit\nEnter your choice: ");
+					scanf("%c",&y);
+					switch(y)
+					{
+						case 'a':
+							printf("Enter the data: ");
+							scanf("%d",&data_item);
+							newnode=create(data_item);
+							head=insert_beg(newnode,head);
+							display(head);
+							break;
+						case 'b':
+							printf("Enter the data: ");
+							scanf("%d",&data_item);
+							newnode=create(data_item);
+							head=insert_end(newnode,head);
+							display(head);
+							break;
+						case 'c':
+							printf("Enter the data: ");
+							scanf("%d",&data_item);
+							newnode=create(data_item);
+							printf("Enter the data before which %d will ne inserted: ",newnode->data);
+							scanf("%d",&item);
+							head=insert_before(head,newnode,item);
+							display(head);
+							break;
+						case 'd':
+							printf("Enter the data: ");
+							scanf("%d",&data_item);
+							newnode=create(data_item);
+							printf("Enter the data after which %d will ne inserted: ",newnode->data);
+							scanf("%d",&item);
+							head=insert_after(head,newnode,item);
+							display(head);
+							break;
+						case 'e':
+							display(head);
+							break;
+					}
+				} while (y!='f');
 				break;
 			case 2:
-				newnode=create();
-				head=insert_beg(newnode,head);
-				display(head);
+				do
+				{
+					fflush(stdin);
+					printf("\na. Delete at begin\nb. Delete at end\nc. Delete before an element\nd. Delete after an element\ne. Display\nf. Exit\nEnter your choice: ");
+					scanf("%c",&y);
+					switch(y)
+					{
+						case 'a':
+							head=del_beg(head);
+							display(head);
+							break;
+						case 'b':
+							head=del_end(head);
+							display(head);
+							break;
+						case 'c':
+							printf("Enter the data before which deletion will take place: ");
+							scanf("%d",&item);
+							head=del_before(head,item);
+							display(head);
+							break;
+						case 'd':
+							printf("Enter the data after which deletion will take place: ");
+							scanf("%d",&item);
+							head=del_after(head,item);
+							display(head);
+							break;
+						case 'e':
+							display(head);
+							break;
+					} 
+				}while (y!='f');
 				break;
 			case 3:
 				display(head);
 				break;
-			case 4:
-				newnode=create();
-				head=insert_after(newnode,head);
-				display(head);
-				break;
-			case 5:
-				newnode=create();
-				head=insert_before(newnode,head);
-				display(head);
-				break;
-			case 6:
-				head=del_beg(head);
-				display(head);
-				break;
-			case 7:
-				head=del_end(head);
-				display(head);
-				break;
-			case 8:
-				head=del_after(head);
-				display(head);
-				break;
-			case 9:
-				head=del_before(head);
-				display(head);
-				break;
 		}
-	}while(x!=10);
-	return 0;
+	}while(x!=4);
+	return 0;	
 }
