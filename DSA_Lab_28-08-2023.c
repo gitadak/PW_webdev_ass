@@ -111,19 +111,21 @@ node* del_beg(node *head)
 
 node* del_end(node *head)
 {
-	node *c;
+	node *c,*del;
 	if(head==NULL)
 		return head;
 	if(head->next==NULL)
 	{
+		del=head;
 		head=NULL;
-		free(head);
+		free(del);
 		return head;
 	}
 	while((c->next)->next!=NULL)
 		c=c->next;
+	del=c->next;
 	c->next=NULL;
-	free(c->next);
+	free(del);
 	return head;
 }
 
@@ -236,7 +238,7 @@ int main()
 							printf("Enter the data: ");
 							scanf("%d",&data_item);
 							newnode=create(data_item);
-							printf("Enter the data before which %d will ne inserted: ",newnode->data);
+							printf("Enter the data before which %d will be inserted: ",newnode->data);
 							scanf("%d",&item);
 							head=insert_before(head,newnode,item);
 							display(head);
@@ -245,7 +247,7 @@ int main()
 							printf("Enter the data: ");
 							scanf("%d",&data_item);
 							newnode=create(data_item);
-							printf("Enter the data after which %d will ne inserted: ",newnode->data);
+							printf("Enter the data after which %d will be inserted: ",newnode->data);
 							scanf("%d",&item);
 							head=insert_after(head,newnode,item);
 							display(head);
