@@ -121,6 +121,7 @@ node* del_end(node *head)
 		free(del);
 		return head;
 	}
+	c=head;
 	while((c->next)->next!=NULL)
 		c=c->next;
 	del=c->next;
