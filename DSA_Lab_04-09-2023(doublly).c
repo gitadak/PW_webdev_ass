@@ -87,7 +87,7 @@ node* del_end(node *head)
 {
 	node *c=head,*del;
 	if(head==NULL)
-		return;
+		return head;
 	while((c->next)->next!=NULL)
 		c=c->next;
 	del=c->next;
@@ -158,6 +158,7 @@ node* insert_before(node *head,node *newnode,int item)
 	newnode->prev=c->prev;
 	(c->prev)->next=newnode;
 	c->prev=newnode;
+    return head;
 }
 
 node* del_after(node *head,int item)
@@ -189,6 +190,40 @@ node* del_after(node *head,int item)
 	((c->next)->next)->prev=c;
 	c->next=(c->next)->next;
 	free(del);
+    return head;
+}
+
+node* del_before(node *head,int item)
+{
+    node *c,*del;
+    if(head==NULL)
+        return head;
+	if(check(item,head)==0)
+	{
+		printf("%d is not present\n",item);
+		return head;
+	}
+    if(head->data==item)
+    {
+        printf("First node\n");
+        return head;
+    }
+    if((head->next)->data==item)
+    {
+        del=head;
+    	head=head->next;
+	    head->prev=NULL;
+	    free(del);
+	    return head;
+    }
+    c=head;
+    while(c->data!=item)
+        c=c->next;
+    del=c->prev;
+    ((c->prev)->prev)->next=c;
+    c->prev=(c->prev)->prev;
+    free(del);
+    return head;
 }
 
 int main()
@@ -206,7 +241,7 @@ int main()
 				do
 				{
 					fflush(stdin);
-					printf("\na. Insert at begin\nb. Insert at end\nc. Insert before an element\nd. Insert after an element\ne. Display\nf. Exit\nEnter your choice: ");
+					printf("\na. Insert at begin\nb. Insert at end\nc. Insert before an element\nd. Insert after an element\ne. Exit\nEnter your choice: ");
 					scanf("%c",&y);
 					switch(y)
 					{
@@ -242,17 +277,14 @@ int main()
 							head=insert_after(head,newnode,item);
 							display(head);
 							break;
-						case 'e':
-							display(head);
-							break;
 					}
-				} while (y!='f');
+				} while (y!='e');
 				break;
 			case 2:
 				do
 				{
 					fflush(stdin);
-					printf("\na. Delete at begin\nb. Delete at end\nc. Delete before an element\nd. Delete after an element\ne. Display\nf. Exit\nEnter your choice: ");
+					printf("\na. Delete at begin\nb. Delete at end\nc. Delete before an element\nd. Delete after an element\ne. Exit\nEnter your choice: ");
 					scanf("%c",&y);
 					switch(y)
 					{
@@ -264,23 +296,20 @@ int main()
 							head=del_end(head);
 							display(head);
 							break;
-						/*case 'c':
+						case 'c':
 							printf("Enter the data before which deletion will take place: ");
 							scanf("%d",&item);
 							head=del_before(head,item);
 							display(head);
-							break;*/
+							break;
 						case 'd':
 							printf("Enter the data after which deletion will take place: ");
 							scanf("%d",&item);
 							head=del_after(head,item);
 							display(head);
 							break;
-						case 'e':
-							display(head);
-							break;
 					} 
-				}while (y!='f');
+				}while (y!='e');
 				break;
 			case 3:
 				display(head);
