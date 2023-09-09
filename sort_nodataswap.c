@@ -48,7 +48,6 @@ void display(node* head)
 		c=c->next;
 	}
 }
-
 node* sort_nodeswap(node *head)
 {
 	node *i,*j,*prei,*prej,*posj;
@@ -61,60 +60,22 @@ node* sort_nodeswap(node *head)
 		{
 			if(i->data>j->data)
 			{
-				if(i==head && j->next==NULL && i->next==j)//ok
-				{
-					j->next=i;
-					i->next=NULL;
-					head=j;
-				}
-				else if(i==head && j->next==NULL)//ok
-				{
-					j->next=i->next;
-					i->next=NULL;
-					prej->next=i;
-					head=j;
-				}
-				else if(i==head && i->next==j)//ok
+			   	if(j==i->next)
 				{
 					i->next=j->next;
 					j->next=i;
-					head=j;
 				}
-				else if(i==head)//ok
+				else
 				{
-					posj=j->next;
+				    posj=j->next;
 					j->next=i->next;
 					i->next=posj;
 					prej->next=i;
+				}
+				if(i==head)
 					head=j;
-				}
-				else if(j->next==NULL && i->next==j)//ok
-				{
-					i->next=NULL;
-					j->next=i;
-					prei->next=j;
-				}
-				else if(j->next==NULL)//ok
-				{
-					j->next=i->next;
-					prei->next=j;
-					i->next=NULL;
-					prej->next=i;
-				}
-				else if(i->next==j)//ok
-				{
-					i->next=j->next;
-					j->next=i;
-					prei->next=j;
-				}
-				else//ok
-				{
-					posj=j->next;
-					j->next=i->next;
-					i->next=posj;
-					prei->next=j;
-					prej->next=i;
-				}
+				else
+					prei->next=j;	
 				goto top;
 			}
 			prej=j;
