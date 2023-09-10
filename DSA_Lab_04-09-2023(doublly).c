@@ -24,12 +24,12 @@ int check(int item,node *head)
 {
 	node *c;
 	c=head;
-	do
+	while(c!=NULL)
 	{
 		if(c->data==item)
 			return 1;
 		c=c->next;
-	}while(c!=head);
+	}
 	return 0;
 }
 
