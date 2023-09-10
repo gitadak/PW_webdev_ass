@@ -77,7 +77,6 @@ node* insert_beg(node *newnode,node *head)
 		return head;
 	}
 	newnode->next=head;
-	newnode->prev=NULL;
 	head->prev=newnode;
 	head=newnode;
 	return head;
@@ -153,7 +152,6 @@ node* insert_before(node *head,node *newnode,int item)
 	if(head->data==item)
 	{
 		newnode->next=head;
-		newnode->prev=NULL;
 		head->prev=newnode;
 		head=newnode;
 		return head;
