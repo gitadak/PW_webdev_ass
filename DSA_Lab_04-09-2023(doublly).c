@@ -88,6 +88,13 @@ node* del_end(node *head)
 	node *c=head,*del;
 	if(head==NULL)
 		return head;
+	if(head->next==NULL)
+	{
+		del=head;
+		head=NULL;
+		free(del);
+		return head;
+	}
 	while((c->next)->next!=NULL)
 		c=c->next;
 	del=c->next;
