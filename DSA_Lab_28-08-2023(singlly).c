@@ -202,14 +202,63 @@ void display(node* head)
 	}
 }
 
+node* reverse(node* head) 
+{
+	node *rest_head,*rest_tail;
+    if (head == NULL || head->next == NULL)
+        return head;
+    rest_head = reverse(head->next);
+	rest_tail=head->next;
+    rest_tail->next = head;
+    head->next = NULL;
+	head=rest_head;
+    return head;
+}
+
+node* DeleteGreaterthanX(node *head,int X)
+{
+	node *c,*del;
+	if(head==NULL)
+		return head;
+	c=head;
+	if(head->next!=NULL)
+	{
+		while(1)
+		{
+			while(((c->next)->data)>X)
+			{
+				del=c->next;
+				c->next=(c->next)->next;
+				free(del);
+				del=NULL;
+				if(c->next==NULL)
+					break;
+			}
+			c=c->next;
+			if(c==NULL)
+				break;
+			if(c->next==NULL)
+				break;
+		}
+	}
+	if(head->data>X)
+	{
+		del=head;
+		head=head->next;
+		free(del);
+		del=NULL;
+	}
+	return head;
+}
+
 int main()
 {
 	node* head=NULL,*newnode;
-	int x,data_item,item;
+	int x,data_item,item,X;
 	char y;
 	do
 	{
-		printf("\n1. Insert\n2. Delete\n3. Display\n4. Exit\nEnter your choice: ");
+		printf("\n1. Insert\n2. Delete\n3. Display\n4. Reverse\n5. Exit\nEnter your choice: ");
 		scanf("%d",&x);
 		switch(x)
 		{
@@ -263,7 +312,7 @@ int main()
 				do
 				{
 					fflush(stdin);
-					printf("\na. Delete at begin\nb. Delete at end\nc. Delete before an element\nd. Delete after an element\ne. Display\nf. Exit\nEnter your choice: ");
+					printf("\na. Delete at begin\nb. Delete at end\nc. Delete before an element\nd. Delete after an element\ne. Display\nf. DeleteGreaterthanX\ng. Exit\nEnter your choice: ");
 					scanf("%c",&y);
 					switch(y)
 					{
@@ -290,13 +339,23 @@ int main()
 						case 'e':
 							display(head);
 							break;
+						case 'f':
+							printf("Enter the value: ");
+							scanf("%d",&X);
+							head=DeleteGreaterthanX(head,X);
+							display(head);
+							break;
 					} 
-				}while (y!='f');
+				}while (y!='g');
 				break;
 			case 3:
 				display(head);
 				break;
+			case 4:
+				head=reverse(head);
+				display(head);
+				break;
 		}
-	}while(x!=4);
+	}while(x!=5);
 	return 0;	
 }
