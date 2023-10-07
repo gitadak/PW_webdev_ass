@@ -172,14 +172,14 @@ node* del_after(node *head,int item)
 	node *c,*del;
 	if(head==NULL)
 		return head;
-	if(head->next==head)
-	{
-		printf("Single node\n");
-		return head;
-	}
 	if(check(item,head)==0)
 	{
 		printf("%d is not present\n",item);
+		return head;
+	}
+	if(head->next==head)
+	{
+		printf("Single node\n");
 		return head;
 	}
 	c=head;
@@ -199,14 +199,14 @@ node* del_before(node *head,int item)
     node *c,*del;
     if(head==NULL)
         return head;
-	if(head->next==head)
-	{
-		printf("Single node\n");
-		return head;
-	}
 	if(check(item,head)==0)
 	{
 		printf("%d is not present\n",item);
+		return head;
+	}
+	if(head->next==head)
+	{
+		printf("Single node\n");
 		return head;
 	}
     c=head;
