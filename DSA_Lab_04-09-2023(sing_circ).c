@@ -79,12 +79,6 @@ node* insert_after(node *head,node* newnode,int item)
 	c=head;
 	while(c->data!=item)
 		c=c->next;
-	if(c->next==head)
-	{
-		newnode->next=head;
-		c->next=newnode;
-		return head;
-	}
 	newnode->next=c->next;
 	c->next=newnode;
 	return head;
@@ -171,14 +165,16 @@ node* del_after(node* head,int item)
 		printf("%d is not present\n",item);
 		return head;
 	}
+    if(head->next==head)
+    {
+        printf("Single node\n");
+        return head;
+    }
 	c=head;
 	while(c->data!=item)
 		c=c->next;
 	if(c->next==head)
-	{
-		printf("Last node\n");
-		return head;
-	}
+        head=head->next;
 	del=c->next;
 	c->next=(c->next)->next;
 	free(del);
