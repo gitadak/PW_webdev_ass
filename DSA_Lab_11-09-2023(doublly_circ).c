@@ -138,14 +138,6 @@ node* insert_after(node *head,node *newnode,int item)
 	c=head;
 	while(c->data!=item)
 		c=c->next;
-	if(c->next==head)
-	{
-		newnode->next=head;
-		newnode->prev=head->prev;
-		(head->prev)->next=newnode;
-		head->prev=newnode;
-		return head;
-	}
 	newnode->prev=c;
 	newnode->next=c->next;
 	(c->next)->prev=newnode;
@@ -163,18 +155,11 @@ node* insert_before(node *head,node *newnode,int item)
 		printf("%d is not present\n",item);
 		return head;
 	}
-	if(head->data==item)
-	{
-		newnode->next=head;
-		newnode->prev=head->prev;
-		(head->prev)->next=newnode;
-		head->prev=newnode;
-		head=newnode;
-		return head;
-	}
 	c=head;
 	while(c->data!=item)
 		c=c->next;
+	if(head->data==item)
+		head=newnode;
 	newnode->next=c;
 	newnode->prev=c->prev;
 	(c->prev)->next=newnode;
@@ -187,6 +172,11 @@ node* del_after(node *head,int item)
 	node *c,*del;
 	if(head==NULL)
 		return head;
+	if(head->next==head)
+	{
+		printf("Single node\n");
+		return head;
+	}
 	if(check(item,head)==0)
 	{
 		printf("%d is not present\n",item);
@@ -195,20 +185,8 @@ node* del_after(node *head,int item)
 	c=head;
 	while(c->data!=item)
 		c=c->next;
-	if(c->next==head)
-	{
-		printf("Last node\n");
-		return head;
-	}
-	if((c->next)->next==NULL)
-	{
-		node *del=head->prev;
-		((head->prev)->prev)->next=head;
-		head->prev=(head->prev)->prev;
-		free(del);
-		del=NULL;
-		return head;
-	}
+    if(c->next==head)
+        head=head->next;
 	del=c->next;
 	((c->next)->next)->prev=c;
 	c->next=(c->next)->next;
@@ -221,29 +199,21 @@ node* del_before(node *head,int item)
     node *c,*del;
     if(head==NULL)
         return head;
+	if(head->next==head)
+	{
+		printf("Single node\n");
+		return head;
+	}
 	if(check(item,head)==0)
 	{
 		printf("%d is not present\n",item);
 		return head;
 	}
-    if(head->data==item)
-    {
-        printf("First node\n");
-        return head;
-    }
-    if((head->next)->data==item)
-    {
-		node *del=head;
-		(head->prev)->next=head->next;
-		(head->next)->prev=head->prev;
-		head=head->next;
-		free(del);
-		del=NULL;
-		return head;
-    }
     c=head;
     while(c->data!=item)
         c=c->next;
+    if((head->next)->data==item)
+		head=head->next;
     del=c->prev;
     ((c->prev)->prev)->next=c;
     c->prev=(c->prev)->prev;
