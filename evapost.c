@@ -25,17 +25,13 @@ int pop()
 
 int evapostfix(char s[100])
 {
-	int i=0,j=0,op1,op2,g;
-	char x,y,temp[10];
+	int i,j,op1,op2;
 	for(i=0;s[i]!='\0';i++)
 	{
 		j=0;
 		while(isdigit(s[i]))
-			temp[i++]=s[i++];
-		temp[j]='\0';
-		if(j!=0)
-			push(atoi(temp));
-		else if(s[i]=='+' || s[i]=='-' || s[i]=='*' || s[i]=='/' /*|| s[i]=='^'*/)
+            push(s[i++]-48);
+		if(s[i]=='+' || s[i]=='-' || s[i]=='*' || s[i]=='/' || s[i]=='^')
 		{
 			op1=pop();
 			op2=pop();
@@ -53,9 +49,9 @@ int evapostfix(char s[100])
 				case '/':
 					push(op2/op1);
 					break;
-				/*case '^':
-					push(math.pow(op2,op1));
-					break;*/
+				case '^':
+					push(pow(op2,op1));
+					break;
 			}
 		}
 	}
