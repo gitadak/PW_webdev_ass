@@ -1,38 +1,23 @@
-//BINARY SEARCH TREE
-#include<stdio.h>
-#include<stdlib.h>
-
+//BST->Insertion,Traversal,Deleteion
+#include <stdio.h>
+#include <stdlib.h>
+ 
 struct tree
 {
-	int key;
-	struct tree *left;
-	struct tree *right;
+    int key;
+    struct tree *left;
+    struct tree *right;
 };
 typedef struct tree tree;
 
-void insert(tree *root, tree *p,int v)
+tree* create(int item)
 {
-	tree *cur;
-	if(root!=NULL)
-	{
-		if(v>root->key)
-			insert(root->right,root,v);
-		else
-			insert(root->left,root,v);
-	}
-	else
-	{
-		cur=(tree*)malloc(sizeof(tree));
-		cur->key=v;
-		cur->left=NULL;
-		cur->right=NULL;
-		if(v>p->key)
-			p->right=cur;
-		else
-			p->left=cur;
-	}
+    tree* temp = (tree*)malloc(sizeof(tree));
+    temp->key = item;
+    temp->left = temp->right = NULL;
+    return temp;
 }
-
+ 
 void preorder(tree *root)
 {
 	if(root!=NULL)
@@ -62,28 +47,80 @@ void postorder(tree *root)
 		printf("%d ",root->key);
 	}
 }
-
+ 
+tree* insert(tree* root,int data)
+{
+    if (root == NULL)
+        return create(data);
+    if (data < root->key)
+        root->left = insert(root->left,data);
+    else
+        root->right = insert(root->right,data);
+    return root;
+}
+ 
+tree* deletetree(tree* root, int data)
+{
+    if (root == NULL)
+        return root;
+    if (root->key > data) 
+    {
+        root->left = deletetree(root->left, data);
+        return root;
+    }
+    else if (root->key < data)
+    {
+        root->right = deletetree(root->right, data);
+        return root;
+    }
+    if (root->left == NULL)
+    {
+        tree* temp = root->right;
+        free(root);
+        return temp;
+    }
+    else if (root->right == NULL)
+    {
+        tree* temp = root->left;
+        free(root);
+        return temp;
+    }
+    else
+    {
+        //Finding inorder successor
+        tree* succParent = root;
+        tree* succ = root->right;
+        while (succ->left != NULL)
+        {
+            succParent = succ;
+            succ = succ->left;
+        }
+        if (succParent != root)
+            succParent->left = succ->right;
+        else
+            succParent->right = succ->right;
+ 
+        root->key = succ->key;
+        free(succ);
+        return root;
+    }
+}
+ 
 int main()
 {
-	int c,v,k=0;
-	tree *root,*m;
-	m=root;
-	root=(tree*)malloc(sizeof(tree));
-	printf("\nEnter the data: ");
-	scanf("%d",&root->key);
-	root->left=NULL;
-	root->right=NULL;
+    int c,v;
+    tree *root=NULL;
 	do
 	{
-		printf("\n\n1. Insert\n2. PREorder\n3. INorder\n4. POSTorder\n5. EXIT\nEnter your choice: ");
+		printf("\n1. Insert\n2. PREorder\n3. INorder\n4. POSTorder\n5. Delete\n6. EXIT\nEnter your choice: ");
 		scanf("%d",&c);
 		switch(c)
 		{
 			case 1:
-				printf("\nValue: ");
+				printf("Enter the node to be inserted: ");
 				scanf("%d",&v);
-				insert(root,m,v);
-				break;
+				root = insert(root,v);
+                break;
 			case 2:
 				preorder(root);
 				break;
@@ -93,6 +130,11 @@ int main()
 			case 4:
 				postorder(root);
 				break;
+            case 5:
+                printf("Enter the node to be deleted: ");
+                scanf("%d",&v);
+                root = deletetree(root,v);
 		}
-	}while(c!=5);
+	}while(c!=6);
+    return 0;
 }
