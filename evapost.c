@@ -25,12 +25,11 @@ int pop()
 
 int evapostfix(char s[100])
 {
-	int i,j,op1,op2;
+	int i,op1,op2;
 	for(i=0;s[i]!='\0';i++)
 	{
-		j=0;
 		while(isdigit(s[i]))
-            push(s[i++]-48);
+			push(s[i++]-48);
 		if(s[i]=='+' || s[i]=='-' || s[i]=='*' || s[i]=='/' || s[i]=='^')
 		{
 			op1=pop();
