@@ -12,7 +12,7 @@ void create_key_mod_size(int a[50],int n,int data)
 		a[pos]=data;
 		return;
 	}
-	for(i=pos;i<n;i++)
+	for(i=pos+1;i<n;i++)
 	{
 		if(a[i]==0)
 		{
@@ -32,7 +32,7 @@ void create_multiplication(int a[50],int n,int data)
 		a[pos]=data;
 		return;
 	}
-	for(i=0;i<n;i++)
+	for(i=pos+1;i<n;i++)
 	{
 		if(a[i]==0)
 		{
@@ -52,7 +52,7 @@ void search_key_mod_size(int a[50],int n,int item)
 		printf("%d found in position %d",item,pos);
 		return;
 	}
-	for(i=pos;i<n;i++)
+	for(i=pos+1;i<n;i++)
 	{
 		if(a[i]==item)
 		{
@@ -72,7 +72,7 @@ void search_multiplication(int a[50],int n,int item)
 		printf("%d found in position %d",item,pos);
 		return;
 	}
-	for(i=pos;i<n;i++)
+	for(i=pos+1;i<n;i++)
 	{
 		if(a[i]==item)
 		{
