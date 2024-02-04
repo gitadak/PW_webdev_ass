@@ -8,7 +8,7 @@ void swap(int *a,int *b)
     *a = *a ^ *b;
 }
 
-int partition(int x[],int low,int high)
+int position(int x[],int low,int high)
 {
     int i,j,t,flag = 1,pos = low;
 
@@ -49,7 +49,7 @@ void qSort(int x[],int low,int high)
 
     if(low < high)
     {
-        pivot = partition(x,low,high);
+        pivot = position(x,low,high);
         qSort(x,low,pivot-1);
         qSort(x,pivot+1,high);
     }
